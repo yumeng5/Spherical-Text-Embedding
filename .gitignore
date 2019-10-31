@@ -1,0 +1,8 @@
+jose
+
+./datasets/wiki/*
+!./datasets/wiki/README.md
+
+./datasets/20news/*
+!./datasets/20news/text.txt
+!./datasets/20news/label.txt
