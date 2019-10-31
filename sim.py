@@ -104,7 +104,7 @@ if __name__ == "__main__":
     
     for key in test_file:
         print(f'### Test: {key} ###')
-        tests = read_sim_test(test_file=test_file[key])
+        tests = read_sim_test(test=key)
         test_sim(word_emb, tests)
         print('\n')
 
