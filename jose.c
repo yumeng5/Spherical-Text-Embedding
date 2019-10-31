@@ -664,7 +664,7 @@ void TrainModel() {
     for (a = 0; a < vocab_size; a++) {
       fprintf(fo, "%s ", vocab[a].word);
       for (b = 0; b < layer1_size; b++) {
-        fwrite(&syn0[a * layer1_size + b], sizeof(real), 1, fo);
+        fprintf(fo, "%lf ", syn0[a * layer1_size + b]);
       }
       fprintf(fo, "\n");
     }

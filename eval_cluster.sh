@@ -31,7 +31,7 @@ start=$SECONDS
 	-min-count ${min_count} -iter ${iter} -threads ${threads} 
 
 duration=$(( SECONDS - start ))
-printf '\nRunning time %s\n' "$duration"
+printf '\nRunning time is %s seconds.\n' "$duration"
 
 emb_file=${doc_emb}
 python cluster.py --dataset ${dataset} --k 20 --emb_file ${emb_file} --method kmeans
