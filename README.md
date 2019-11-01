@@ -10,6 +10,8 @@ The source code used for Spherical Text Embedding, published in NeurIPS 2019.
 
 We provide a shell script ``run.sh`` for compiling the source file and training embedding.
 
+**Note: When preparing the training text corpus, make sure each line in the file is one document/paragraph.**
+
 ### Hyperparameters
 
 Invoke the command without arguments for a list of hyperparameters and their meanings:
