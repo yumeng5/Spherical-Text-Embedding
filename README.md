@@ -54,11 +54,12 @@ Parameters:
 
 Examples:
 ./jose -train text.txt -word-output jose.txt -size 100 -margin 0.15 -window 5 -sample 1e-3 -negative 2 -iter 10
-
 ```
 
 ## Word Similarity Evaluation
 
-We provide a shell script ``eval_sim.sh`` for word similarity evaluation of trained embeddings on the wikipedia dump. The script will first download a zipped file of the pre-processed wikipedia dump (retrieved 2019.05; the zipped version is of ~4GB; the unzipped one is of ~13GB; for a detailed description of the dataset, see [its README file](datasets/wiki/README.md)), and then run ``JoSE`` on it. Finally, the trained embeddings are evaluated on three benchmark word similarity datasets: WordSim-353, MEN and SimLex-999.
+We provide a shell script ``eval_sim.sh`` for word similarity evaluation of trained spherical word embeddings on the wikipedia dump. The script will first download a zipped file of the pre-processed wikipedia dump (retrieved 2019.05; the zipped version is of ~4GB; the unzipped one is of ~13GB; for a detailed description of the dataset, see [its README file](datasets/wiki/README.md)), and then run ``JoSE`` on it. Finally, the trained embeddings are evaluated on three benchmark word similarity datasets: WordSim-353, MEN and SimLex-999.
 
+## Document Clustering Evaluation
 
+We provide a shell script ``eval_cluster.sh`` for document clustering evaluation of trained spherical document embeddings on the 20 Newsgroup dataset. The script will perform K-Means and Spherical K-Means clustering on the trained document embeddings.
