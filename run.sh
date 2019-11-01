@@ -1,5 +1,5 @@
-# dataset directory
-dataset=wiki
+# dataset directory (need to be under ./datasets)
+dataset=DIRECTORY_TO_CORPUS
 
 # text file name; one document per line
 text_file=text.txt

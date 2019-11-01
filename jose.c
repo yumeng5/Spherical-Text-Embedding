@@ -118,22 +118,6 @@ int SearchVocab(char *word) {
   return -1;
 }
 
-// Record document length
-void ReadDoc(FILE *fin) {
-  char word[MAX_STRING];
-  long long i;
-  while (1) {
-    ReadWord(word, fin);
-    if (feof(fin)) break;
-    i = SearchVocab(word);
-    if (i == 0) {
-      doc_sizes[corpus_size] = ftell(fin);
-      corpus_size++;
-    } else if (i == -1) continue;
-    else docs[corpus_size]++;
-  }
-}
-
 // Locate line number of current file pointer
 int FindLine(FILE *fin) {
   long long pos = ftell(fin);
@@ -248,6 +232,7 @@ void LearnVocabFromTrainFile() {
   }
   vocab_size = 0;
   AddWordToVocab((char *) "</s>");
+
   while (1) {
     ReadWord(word, fin);
     if (feof(fin)) break;
@@ -260,7 +245,16 @@ void LearnVocabFromTrainFile() {
     if (i == -1) {
       a = AddWordToVocab(word);
       vocab[a].cn = 1;
-    } else vocab[i].cn++;
+    } 
+    else if (i == 0) {
+      vocab[i].cn++;
+      doc_sizes[corpus_size] = ftell(fin);
+      corpus_size++;
+    }
+    else {
+      vocab[i].cn++;
+      docs[corpus_size]++;
+    }
     if (vocab_size > vocab_hash_size * 0.7) ReduceVocab();
   }
   SortVocab();
@@ -268,8 +262,6 @@ void LearnVocabFromTrainFile() {
     printf("Vocab size: %lld\n", vocab_size);
     printf("Words in train file: %lld\n", train_words);
   }
-  fseek(fin, 0, SEEK_SET);
-  ReadDoc(fin);
   file_size = ftell(fin);
   fclose(fin);
 }
@@ -715,21 +707,25 @@ int main(int argc, char **argv) {
   int i;
   if (argc == 1) {
     printf("Parameters:\n");
-    printf("\t-train <file>\n");
+    printf("\t-train <file> (mandatory argument)\n");
     printf("\t\tUse text data from <file> to train the model\n");
     printf("\t-word-output <file>\n");
     printf("\t\tUse <file> to save the resulting word vectors\n");
+    printf("\t-context-output <file>\n");
+    printf("\t\tUse <file> to save the resulting word context vectors\n");
+    printf("\t-doc-output <file>\n");
+    printf("\t\tUse <file> to save the resulting document vectors\n");
     printf("\t-size <int>\n");
     printf("\t\tSet size of word vectors; default is 100\n");
     printf("\t-window <int>\n");
     printf("\t\tSet max skip length between words; default is 5\n");
     printf("\t-sample <float>\n");
-    printf("\t\tSet threshold for occurrence of words. Those that appear with higher frequency in the training data\n");
-    printf("\t\twill be randomly down-sampled; default is 1e-3, useful range is (0, 1e-5)\n");
+    printf("\t\tSet threshold for occurrence of words. Those that appear with higher frequency in the\n");
+    printf("\t\ttraining data will be randomly down-sampled; default is 1e-3, useful range is (0, 1e-5)\n");
     printf("\t-negative <int>\n");
     printf("\t\tNumber of negative examples; default is 2\n");
     printf("\t-threads <int>\n");
-    printf("\t\tUse <int> threads (default 12)\n");
+    printf("\t\tUse <int> threads (default 20)\n");
     printf("\t-margin <float>\n");
     printf("\t\tMargin used in loss function to separate positive samples from negative samples\n");
     printf("\t-iter <int>\n");
@@ -748,7 +744,7 @@ int main(int argc, char **argv) {
     printf("\t\tThe pretrained embeddings will be read from <file>\n");
     printf("\nExamples:\n");
     printf(
-        "./jose -train data.txt -word-output vec.txt -size 200 -margin 0.2 -window 5 -sample 1e-3 -negative 5 -iter 3\n\n");
+        "./jose -train text.txt -word-output jose.txt -size 100 -margin 0.15 -window 5 -sample 1e-3 -negative 2 -iter 10\n\n");
     return 0;
   }
   word_emb[0] = 0;

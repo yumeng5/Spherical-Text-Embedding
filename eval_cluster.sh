@@ -20,7 +20,7 @@ min_count=5
 iter=20
 
 # number of threads to be run in parallel
-threads=20
+threads=10
 
 make jose
 
@@ -34,4 +34,9 @@ duration=$(( SECONDS - start ))
 printf '\nRunning time is %s seconds.\n' "$duration"
 
 emb_file=${doc_emb}
+
+# evaluate document clustering with K-Means
 python cluster.py --dataset ${dataset} --k 20 --emb_file ${emb_file} --method kmeans
+
+# evaluate document clustering with Spherical K-Means
+python cluster.py --dataset ${dataset} --k 20 --emb_file ${emb_file} --method skmeans
