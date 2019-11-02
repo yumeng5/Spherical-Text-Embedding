@@ -34,12 +34,14 @@ def cluster_doc(doc_emb, K, method):
     y_pred = []
     if method == "kmeans":
         # k-means
+        print("Clustering using K-Means")
         from sklearn.cluster import KMeans
         km = KMeans(n_clusters=K, n_init=1)
         km.fit(doc_emb)
         y_pred = km.labels_
     elif method == "skmeans":
         # spherical k-means
+        print("Clustering using Spherical K-Means")
         from spherecluster import SphericalKMeans
         skm = SphericalKMeans(n_clusters=K, n_init=1)
         skm.fit(doc_emb)
