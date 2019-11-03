@@ -48,9 +48,6 @@ def classify(train, train_label, test, test_label, k=3):
     neigh.fit(train, train_label)
     y_pred = neigh.predict(test)
     f1_macro, f1_micro = f1(test_label, y_pred)
-    print((f1_macro, f1_micro))
-
-    f1_macro, f1_micro = f1(test_label, y_pred)
     print(f"F1 macro: {f1_macro}, F1 micro: {f1_micro}")
 
 
