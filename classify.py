@@ -57,12 +57,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='classify',
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--dataset', default='20news')
-    parser.add_argument('--emb_file', default='word2vec_100.txt')
+    parser.add_argument('--emb_file', default='jose.txt')
     parser.add_argument('--train_num', default=-1, type=int)
 
     args = parser.parse_args()
     print(args)
 
+    print(f'### Test: Document Classification ###')
     doc_emb = get_emb(vec_file=os.path.join("datasets", args.dataset, args.emb_file))
     y_true = read_label(os.path.join("datasets", args.dataset))
     
