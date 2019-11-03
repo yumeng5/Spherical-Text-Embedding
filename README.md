@@ -65,3 +65,19 @@ We provide a shell script ``eval_sim.sh`` for word similarity evaluation of trai
 ## Document Clustering Evaluation
 
 We provide a shell script ``eval_cluster.sh`` for document clustering evaluation of trained spherical document embeddings on the 20 Newsgroup dataset. The script will perform K-Means and Spherical K-Means clustering on the trained document embeddings.
+
+## Document Classification Evaluation
+
+We provide a shell script ``eval_classify.sh`` for document classification evaluation of trained spherical document embeddings on the 20 Newsgroup dataset. The script will perform KNN classification following the original 20 Newsgroup train/test split with the trained document embeddings as features.
+
+## Citations
+
+Please cite the following paper if you find the code helpful for your research.
+```
+@inproceedings{meng2019spherical,
+  title={Spherical Text Embedding},
+  author={Meng, Yu and Huang, Jiaxin and Wang, Guangyuan and Zhang, Chao and Zhuang, Honglei and Kaplan, Lance and Han, Jiawei},
+  booktitle={Advances in neural information processing systems},
+  year={2019}
+}
+```
