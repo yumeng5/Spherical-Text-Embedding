@@ -27,8 +27,6 @@ def get_emb(vec_file):
         word = tokens[0]
         vec = tokens[1:]
         vec = np.array([float(ele) for ele in vec])
-        if True in np.isnan(vec):
-            continue
         word_emb[word] = np.array(vec)
         vocabulary[word] = i
         vocabulary_inv[i] = word
@@ -107,4 +105,3 @@ if __name__ == "__main__":
         tests = read_sim_test(test=key)
         test_sim(word_emb, tests)
         print('\n')
-
