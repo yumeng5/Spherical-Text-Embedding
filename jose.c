@@ -30,15 +30,13 @@ int *vocab_hash, *docs;
 long long *doc_sizes;
 long long vocab_max_size = 1000, vocab_size = 0, corpus_size = 0, layer1_size = 100;
 long long train_words = 0, word_count_actual = 0, iter = 10, file_size = 0;
-real alpha = 0.04, starting_alpha, global_lambda = 1.0, sample = 1e-3, margin = 0.15;
+int negative = 2;
+const int table_size = 1e8;
+int *word_table;
+real alpha = 0.04, starting_alpha, sample = 1e-3, margin = 0.15;
 real *syn0, *syn1neg, *syn1doc;
 clock_t start;
 
-int with_regularization = 0;
-
-int negative = 2;
-const int table_size = 1e8;
-int *word_table, *doc_table;
 
 void InitUnigramTable() {
   int a, i;
@@ -55,24 +53,6 @@ void InitUnigramTable() {
       d1 += pow(vocab[i].cn, power) / train_words_pow;
     }
     if (i >= vocab_size) i = vocab_size - 1;
-  }
-}
-
-void InitDocTable() {
-  int a, i;
-  double doc_len_pow = 0;
-  double d1, power = 0.75;
-  doc_table = (int *) malloc(table_size * sizeof(int));
-  for (a = 0; a < corpus_size; a++) doc_len_pow += pow(docs[a], power);
-  i = 0;
-  d1 = pow(docs[i], power) / doc_len_pow;
-  for (a = 0; a < table_size; a++) {
-    doc_table[a] = i;
-    if (a / (double) table_size > d1) {
-      i++;
-      d1 += pow(docs[i], power) / doc_len_pow;
-    }
-    if (i >= corpus_size) i = corpus_size - 1;
   }
 }
 
@@ -644,7 +624,6 @@ void TrainModel() {
   
   InitNet();
   InitUnigramTable();
-  InitDocTable();
   start = clock();
   
   for (a = 0; a < num_threads; a++) pthread_create(&pt[a], NULL, TrainModelThread, (void *) a);
@@ -729,7 +708,7 @@ int main(int argc, char **argv) {
     printf("\t-margin <float>\n");
     printf("\t\tMargin used in loss function to separate positive samples from negative samples\n");
     printf("\t-iter <int>\n");
-    printf("\t\tRun more training iterations (default 5)\n");
+    printf("\t\tRun more training iterations (default 10)\n");
     printf("\t-min-count <int>\n");
     printf("\t\tThis will discard words that appear less than <int> times; default is 5\n");
     printf("\t-alpha <float>\n");
