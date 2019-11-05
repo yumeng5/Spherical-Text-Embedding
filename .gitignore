@@ -2,6 +2,7 @@ jose
 
 /datasets/wiki/*
 !/datasets/wiki/README.md
+!/datasets/wiki/fetch_data.sh
 
 /datasets/20news/*
 !/datasets/20news/text.txt
