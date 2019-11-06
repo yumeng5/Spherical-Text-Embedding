@@ -25,7 +25,9 @@ threads=20
 green=`tput setaf 2`
 reset=`tput sgr0`
 
+cd ./src
 make jose
+cd ..
 
 start=$SECONDS
 
@@ -39,7 +41,7 @@ then
 	cd ../../
 fi
 
-./jose -train ./datasets/${dataset}/${text_file} -word-output ./datasets/${dataset}/${out_file} \
+./src/jose -train ./datasets/${dataset}/${text_file} -word-output ./datasets/${dataset}/${out_file} \
 	-size ${word_dim} -alpha 0.04 -margin 0.15 -window ${window_size} -negative 2 -sample 1e-3 \
 	-min-count ${min_count} -iter ${iter} -threads ${threads} 
 

@@ -22,11 +22,13 @@ iter=20
 # number of threads to be run in parallel
 threads=10
 
+cd ./src
 make jose
+cd ..
 
 start=$SECONDS
 
-./jose -train ./datasets/${dataset}/${text_file} -doc-output ./datasets/${dataset}/${doc_emb} \
+./src/jose -train ./datasets/${dataset}/${text_file} -doc-output ./datasets/${dataset}/${doc_emb} \
 	-size ${word_dim} -alpha 0.04 -margin 0.15 -window ${window_size} -negative 2 -sample 1e-3 \
 	-min-count ${min_count} -iter ${iter} -threads ${threads} 
 
