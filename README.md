@@ -16,7 +16,7 @@ We provide a shell script ``run.sh`` for compiling the source file and training 
 
 Invoke the command without arguments for a list of hyperparameters and their meanings:
 ```
-$ ./jose
+$ ./src/jose
 Parameters:
         -train <file> (mandatory argument)
                 Use text data from <file> to train the model
@@ -40,7 +40,7 @@ Parameters:
         -margin <float>
                 Margin used in loss function to separate positive samples from negative samples
         -iter <int>
-                Run more training iterations (default 5)
+                Run more training iterations (default 10)
         -min-count <int>
                 This will discard words that appear less than <int> times; default is 5
         -alpha <float>
