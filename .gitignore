@@ -1,4 +1,4 @@
-jose
+/src/jose
 
 /datasets/wiki/*
 !/datasets/wiki/README.md
