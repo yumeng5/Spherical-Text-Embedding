@@ -1,7 +1,7 @@
 # Wikipedia Dump Dataset
 
-We provide a script ``fetch_data.sh`` to download the pre-processed wikipedia dump.  
-**Note: If you have run ``eval_sim.sh`` from the root directory, the wikipedia dump should have already been automatically downloaded under this directory, and you will not need to run ``fetch_data.sh``.**
+We provide a script ``fetch_data.sh`` to download the pre-processed wikipedia dump. Alternatively, you can manually download the file from [this Google Drive link](https://drive.google.com/open?id=1fT1GxBMXEItf2NtNMjdXhA61HPecPO98) and upzip it to obtain the text corpus.  
+**Note: If you have run ``eval_sim.sh`` from the root directory, the wikipedia dump should have already been automatically downloaded under this directory, and you will not need to run ``fetch_data.sh`` or manually download the dataset.**
 
 ## Dataset Description
 
