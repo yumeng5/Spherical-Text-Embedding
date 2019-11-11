@@ -6,6 +6,16 @@ The source code used for Spherical Text Embedding, published in NeurIPS 2019.
 
 * GCC compiler (used to compile the source c file): See the [guide for installing GCC](https://gcc.gnu.org/wiki/InstallingGCC).
 
+## Pre-trained Embeddings
+
+We provide pre-trained ``JoSE`` embeddings on the [wikipedia dump](datasets/wiki/README.md).
+
+* [100-d](https://drive.google.com/file/d/1hfA8BbhdnbxKejoW78lZU_voJCEfrSVH/view?usp=sharing)
+* [200-d](https://drive.google.com/file/d/1qwMSFyf_6OVDxYoWywhsEhiZ3GlL041q/view?usp=sharing)
+* [300-d](https://drive.google.com/file/d/13rPhPCOO1jA2ROhb4gBa8-2wsjdq-87Y/view?usp=sharing)
+
+Unlike Euclidean embeddings such as Word2Vec and GloVe, spherical embeddings do not necessarily benefit from higher-dimensional space, so it might be a good idea to start with lower-dimensional ones first.
+
 ## Run the Code
 
 We provide a shell script ``run.sh`` for compiling the source file and training embedding.
