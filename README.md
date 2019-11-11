@@ -9,7 +9,7 @@ The source code used for Spherical Text Embedding, published in NeurIPS 2019.
 ## Pre-trained Embeddings
 
 We provide pre-trained ``JoSE`` embeddings on the [wikipedia dump](datasets/wiki/README.md).
-
+* [50-d](https://drive.google.com/open?id=1bH7Jix1oQVzFxOz9ZtBa2RJZCLr6Zxvx)
 * [100-d](https://drive.google.com/file/d/1hfA8BbhdnbxKejoW78lZU_voJCEfrSVH/view?usp=sharing)
 * [200-d](https://drive.google.com/file/d/1qwMSFyf_6OVDxYoWywhsEhiZ3GlL041q/view?usp=sharing)
 * [300-d](https://drive.google.com/file/d/13rPhPCOO1jA2ROhb4gBa8-2wsjdq-87Y/view?usp=sharing)
