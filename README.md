@@ -24,6 +24,8 @@ We provide a shell script ``run.sh`` for compiling the source file and training 
 
 ### Hyperparameters
 
+**Note: It is recommended to use the default hyperparameters, especially the number of negative samples (``-negative``) and loss function margin (``-margin``).**
+
 Invoke the command without arguments for a list of hyperparameters and their meanings:
 ```
 $ ./src/jose
