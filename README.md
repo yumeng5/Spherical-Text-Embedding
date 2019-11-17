@@ -44,15 +44,15 @@ Parameters:
                 Set max skip length between words; default is 5
         -sample <float>
                 Set threshold for occurrence of words. Those that appear with higher frequency in the
-                training data will be randomly down-sampled; default is 1e-3, useful range is (0, 1e-5)
+                training data will be randomly down-sampled; default is 1e-3, useful range is (0, 1e-3)
         -negative <int>
                 Number of negative examples; default is 2
         -threads <int>
-                Use <int> threads (default 20)
+                Use <int> threads; default is 20
         -margin <float>
-                Margin used in loss function to separate positive samples from negative samples
+                Margin used in loss function to separate positive samples from negative samples; default is 0.15
         -iter <int>
-                Run more training iterations (default 10)
+                Run more training iterations; default is 10
         -min-count <int>
                 This will discard words that appear less than <int> times; default is 5
         -alpha <float>
