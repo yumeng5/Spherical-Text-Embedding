@@ -491,22 +491,22 @@ void *TrainModelThread(void *id) {
         if (c >= sentence_length) continue;
         last_word = sen[c];
         if (last_word == -1) continue;
-        l1 = last_word * layer1_size;
+        l1 = last_word * layer1_size; // real center word u
         
         obj_w = 0;
         for (d = 0; d < negative + 1; d++) {
           if (d == 0) {
-            l3 = word * layer1_size;
+            l3 = word * layer1_size; // real context word v
           } else {
             next_random = next_random * (unsigned long long) 25214903917 + 11;
             target = word_table[(next_random >> 16) % table_size];
             if (target == 0) target = next_random % (vocab_size - 1) + 1;
             if (target == word) continue;
-            l2 = target * layer1_size;
+            l2 = target * layer1_size; // negative center word u'
             f = 0;
-            for (c = 0; c < layer1_size; c++) f += syn0[c + l1] * syn1neg[c + l3];
+            for (c = 0; c < layer1_size; c++) f += syn0[c + l1] * syn1neg[c + l3]; // f = cos(v, u) = v * u
             h = 0;
-            for (c = 0; c < layer1_size; c++) h += syn0[c + l2] * syn1neg[c + l3];
+            for (c = 0; c < layer1_size; c++) h += syn0[c + l2] * syn1neg[c + l3]; // h = cos(v, u') = v * u'
         
             if (f - h < margin) {
               obj_w += margin - (f - h);
@@ -516,8 +516,8 @@ void *TrainModelThread(void *id) {
               for (c = 0; c < layer1_size; c++) neu1e[c] += syn0[c + l1] - f * syn1neg[c + l3] + h * syn1neg[c + l3] - syn0[c + l2];
               
               // update positive center word
-              for (c = 0; c < layer1_size; c++) grad[c] = syn1neg[c + l3] - f * syn0[c + l1];
-              step = 1 - f;
+              for (c = 0; c < layer1_size; c++) grad[c] = syn1neg[c + l3] - f * syn0[c + l1]; // negative Riemannian gradient
+              step = 1 - f; // cosine distance, d_cos
               for (c = 0; c < layer1_size; c++) syn0[c + l1] += alpha * step * grad[c];
               g = 0;
               for (c = 0; c < layer1_size; c++) g += syn0[c + l1] * syn0[c + l1];
@@ -526,7 +526,7 @@ void *TrainModelThread(void *id) {
 
               // update negative center word
               for (c = 0; c < layer1_size; c++) grad[c] = h * syn0[c + l2] - syn1neg[c + l3];
-              step = 2 * h;
+              step = 2 * h; // 2 * negative cosine similarity
               for (c = 0; c < layer1_size; c++) syn0[c + l2] += alpha * step * grad[c];
               g = 0;
               for (c = 0; c < layer1_size; c++) g += syn0[c + l2] * syn0[c + l2];
@@ -546,21 +546,21 @@ void *TrainModelThread(void *id) {
       }
 
     obj_d = 0;
-    l1 = doc * layer1_size;
+    l1 = doc * layer1_size; // real document d
     for (d = 0; d < negative + 1; d++) {
       if (d == 0) {
-        l3 = word * layer1_size;
+        l3 = word * layer1_size; // real center word u
       } else {
         next_random = next_random * (unsigned long long) 25214903917 + 11;
         target = word_table[(next_random >> 16) % table_size];
         if (target == 0) target = next_random % (vocab_size - 1) + 1;
         if (target == word) continue;
-        l2 = target * layer1_size;
+        l2 = target * layer1_size; // negative center word u'
       
         f = 0;
-        for (c = 0; c < layer1_size; c++) f += syn0[c + l3] * syn1doc[c + l1];
+        for (c = 0; c < layer1_size; c++) f += syn0[c + l3] * syn1doc[c + l1]; // f = cos(u, d) = u * d
         h = 0;
-        for (c = 0; c < layer1_size; c++) h += syn0[c + l2] * syn1doc[c + l1];
+        for (c = 0; c < layer1_size; c++) h += syn0[c + l2] * syn1doc[c + l1]; // h = cos(u', d) = u' * d
     
         if (f - h < margin) {
           obj_d += margin - (f - h);
