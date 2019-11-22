@@ -491,12 +491,12 @@ void *TrainModelThread(void *id) {
         if (c >= sentence_length) continue;
         last_word = sen[c];
         if (last_word == -1) continue;
-        l1 = last_word * layer1_size; // real center word u
+        l1 = last_word * layer1_size; // positive center word u
         
         obj_w = 0;
         for (d = 0; d < negative + 1; d++) {
           if (d == 0) {
-            l3 = word * layer1_size; // real context word v
+            l3 = word * layer1_size; // positive context word v
           } else {
             next_random = next_random * (unsigned long long) 25214903917 + 11;
             target = word_table[(next_random >> 16) % table_size];
@@ -546,10 +546,10 @@ void *TrainModelThread(void *id) {
       }
 
     obj_d = 0;
-    l1 = doc * layer1_size; // real document d
+    l1 = doc * layer1_size; // positive document d
     for (d = 0; d < negative + 1; d++) {
       if (d == 0) {
-        l3 = word * layer1_size; // real center word u
+        l3 = word * layer1_size; // positive center word u
       } else {
         next_random = next_random * (unsigned long long) 25214903917 + 11;
         target = word_table[(next_random >> 16) % table_size];
