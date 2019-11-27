@@ -511,7 +511,7 @@ void *TrainModelThread(void *id) {
             if (f - h < margin) {
               obj_w += margin - (f - h);
 
-              // accumulate context word gradient
+              // compute context word gradient
               for (c = 0; c < layer1_size; c++) neu1e[c] = 0;
               for (c = 0; c < layer1_size; c++) neu1e[c] += syn0[c + l1] - f * syn1neg[c + l3] + h * syn1neg[c + l3] - syn0[c + l2];
               
@@ -565,10 +565,9 @@ void *TrainModelThread(void *id) {
         if (f - h < margin) {
           obj_d += margin - (f - h);
 
-          // accumulate document gradient
+          // compute document gradient
           for (c = 0; c < layer1_size; c++) neu1e[c] = 0;
-          for (c = 0; c < layer1_size; c++) neu1e[c] += syn0[c + l3] - f * syn1doc[c + l1];
-          for (c = 0; c < layer1_size; c++) neu1e[c] += h * syn1doc[c + l1] - syn0[c + l2];
+          for (c = 0; c < layer1_size; c++) neu1e[c] += syn0[c + l3] - f * syn1doc[c + l1] + h * syn1doc[c + l1] - syn0[c + l2];
 
           // update positive center word
           for (c = 0; c < layer1_size; c++) grad[c] = syn1doc[c + l1] - f * syn0[c + l3];
