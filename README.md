@@ -1,6 +1,6 @@
 # Spherical Text Embedding
 
-The source code used for Spherical Text Embedding, published in NeurIPS 2019.
+The source code used for Spherical Text Embedding, published in NeurIPS 2019. The code structure (especially file reading and saving functions) is adapted from the [Word2Vec implementation](https://github.com/tmikolov/word2vec).
 
 ## Requirements
 

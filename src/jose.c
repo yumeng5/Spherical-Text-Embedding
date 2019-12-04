@@ -1,3 +1,6 @@
+// The code structure (especially file reading and saving functions) is adapted from the Word2Vec implementation
+//          https://github.com/tmikolov/word2vec
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
