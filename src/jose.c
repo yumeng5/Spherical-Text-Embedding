@@ -29,7 +29,7 @@ char word_emb[MAX_STRING], context_emb[MAX_STRING], doc_output[MAX_STRING];
 char save_vocab_file[MAX_STRING], read_vocab_file[MAX_STRING];
 struct vocab_word *vocab;
 int debug_mode = 2, window = 5, min_count = 5, num_threads = 20, min_reduce = 1;
-int *vocab_hash, *docs;
+int *vocab_hash;
 long long *doc_sizes;
 long long vocab_max_size = 1000, vocab_size = 0, corpus_size = 0, layer1_size = 100;
 long long train_words = 0, word_count_actual = 0, iter = 10, file_size = 0;
@@ -233,11 +233,12 @@ void LearnVocabFromTrainFile() {
       vocab[i].cn++;
       doc_sizes[corpus_size] = ftell(fin);
       corpus_size++;
+      if (corpus_size >= corpus_max_size) {
+        printf("[ERROR] Number of documents in corpus larger than \"corpus_max_size\"! Set a larger \"corpus_max_size\" in Line 18 of jose.c!\n");
+        exit(1);
+      }
     }
-    else {
-      vocab[i].cn++;
-      docs[corpus_size]++;
-    }
+    else vocab[i].cn++;
     if (vocab_size > vocab_hash_size * 0.7) ReduceVocab();
   }
   SortVocab();
@@ -418,7 +419,6 @@ void InitNet() {
     for (b = 0; b < layer1_size; b++)
       syn1doc[a * layer1_size + b] /= sqrt(norm);
   }
-  
 }
 
 void *TrainModelThread(void *id) {
@@ -750,7 +750,6 @@ int main(int argc, char **argv) {
   if ((i = ArgPos((char *) "-min-count", argc, argv)) > 0) min_count = atoi(argv[i + 1]);
   vocab = (struct vocab_word *) calloc(vocab_max_size, sizeof(struct vocab_word));
   vocab_hash = (int *) calloc(vocab_hash_size, sizeof(int));
-  docs = (int *) calloc(corpus_max_size, sizeof(int));
   doc_sizes = (long long *) calloc(corpus_max_size, sizeof(long long));
   if (negative <= 0) {
     printf("ERROR: Nubmer of negative samples must be positive!\n");
