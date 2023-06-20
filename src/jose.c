@@ -311,6 +311,7 @@ void LoadEmb(char *emb_file, real *emb_ptr) {
   FILE *fp = fopen(emb_file, "r");
   if (fscanf(fp, "%d", &vocab_size_tmp) != 1 || fscanf(fp, "%d", &word_dim) != 1) {
     printf("Embedding file read failed\n");
+    fclose(fp);
     exit(1);
   }
   if (layer1_size != word_dim) {
