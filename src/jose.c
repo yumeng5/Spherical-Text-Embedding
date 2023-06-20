@@ -309,8 +309,10 @@ void LoadEmb(char *emb_file, real *emb_ptr) {
   }
   // read embedding file
   FILE *fp = fopen(emb_file, "r");
-  fscanf(fp, "%d", &vocab_size_tmp);
-  fscanf(fp, "%d", &word_dim);
+  if (fscanf(fp, "%d", &vocab_size_tmp) != 1 || fscanf(fp, "%d", &word_dim) != 1) {
+    printf("Embedding file read failed\n");
+    exit(1);
+  }
   if (layer1_size != word_dim) {
     printf("Embedding dimension incompatible with pretrained file!\n");
     exit(1);
