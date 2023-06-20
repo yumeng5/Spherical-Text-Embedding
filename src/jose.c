@@ -303,12 +303,15 @@ void LoadEmb(char *emb_file, real *emb_ptr) {
     exit(1);
   }
   printf("Loading embedding from file %s\n", emb_file);
-  if (access(emb_file, R_OK) == -1) {
+  
+  // check file existence
+  FILE *fp = fopen(emb_file, "r");
+  if (fp == NULL) {
     printf("File %s does not exist\n", emb_file);
     exit(1);
   }
+  
   // read embedding file
-  FILE *fp = fopen(emb_file, "r");
   fscanf(fp, "%d", &vocab_size_tmp);
   fscanf(fp, "%d", &word_dim);
   if (layer1_size != word_dim) {
